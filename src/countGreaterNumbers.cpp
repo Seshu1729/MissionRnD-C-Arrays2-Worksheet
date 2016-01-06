@@ -14,12 +14,35 @@ ERROR CASES: Return NULL for invalid inputs.
 NOTES:
 */
 
-struct transaction {
+struct transaction 
+{
 	int amount;
 	char date[11];
 	char description[20];
 };
 
-int countGreaterNumbers(struct transaction *Arr, int len, char *date) {
-	return -1;
+int compare(char *date1, char *date2)
+{
+	int indicator[8] = { 6, 7, 8, 9, 3, 4, 0, 1 };
+	int index;
+	for (index = 0; index < 8; index++)
+	{
+		if (date1[indicator[index]] > date2[indicator[index]])
+			return 1;
+		else if (date1[indicator[index]] < date2[indicator[index]])
+			return 0;
+	}
+	return 0;
+}
+
+int countGreaterNumbers(struct transaction *Arr, int len, char *date) 
+{
+	int index = 0;
+	while (index < len)
+	{
+		if (compare(Arr[index].date, date))
+			return len-index;
+		index++;
+	}
+	return 0;
 }

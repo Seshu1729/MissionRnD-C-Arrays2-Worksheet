@@ -23,16 +23,16 @@ struct transaction
 	char description[20];
 };
 
-int isEqual(char *original, char *expected)
+int isEqual(char *string1, char *string2)
 {
-	while (*original&&*expected)
+	while (*string1&&*string2)
 	{
-		if (*original != *expected)
+		if (*string1 != *string2)
 			return 0;
-		original++;
-		expected++;
+		string1++;
+		string2++;
 	}
-	if (!(*original || *expected))
+	if (!(*string1 || *string2))
 		return 1;
 	else
 		return 0;

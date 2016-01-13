@@ -15,12 +15,69 @@ NOTES:
 
 #include <iostream>
 
-struct transaction {
+struct transaction 
+{
 	int amount;
 	char date[11];
 	char description[20];
 };
 
-struct transaction * mergeSortedArrays(struct transaction *A, int ALen, struct transaction *B, int BLen) {
-	return NULL;
+int compareTwoDates(char *date1, char *date2)
+{
+	int indicator[8] = { 6, 7, 8, 9, 3, 4, 0, 1 };
+	int index;
+	for (index = 0; index < 8; index++)
+	{
+		if (date1[indicator[index]] > date2[indicator[index]])
+			return 1;
+		else if (date1[indicator[index]] < date2[indicator[index]])
+			return 0;
+	}
+	return 0;
+}
+
+struct transaction * mergeSortedArrays(struct transaction *A, int ALen, struct transaction *B, int BLen) 
+{
+	struct transaction *result;
+	int AIndex = 0, BIndex = 0, RIndex = 0;
+	result = (struct transaction *)malloc((ALen + BLen)*sizeof(struct transaction));
+	if (A == NULL || B == NULL)
+		return NULL;
+	else
+	{
+		while (AIndex < ALen&&BIndex < BLen)
+		{
+			if (!compareTwoDates(A[AIndex].date, B[BIndex].date))
+			{
+				result[RIndex] = A[AIndex];
+				RIndex++;
+				AIndex++;
+			}
+			else
+			{
+				result[RIndex] = B[BIndex];
+				RIndex++;
+				BIndex++;
+			}
+		}
+		if (AIndex < ALen)
+		{
+			while (AIndex < ALen)
+			{
+				result[RIndex] = A[AIndex];
+				RIndex++;
+				AIndex++;
+			}
+		}
+		if (BIndex < BLen)
+		{
+			while (BIndex < BLen)
+			{
+				result[RIndex] = B[BIndex];
+				RIndex++;
+				BIndex++;
+			}
+		}
+	}
+	return result;
 }
